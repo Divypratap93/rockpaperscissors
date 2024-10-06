@@ -11,7 +11,7 @@ function getComputerChoice(){
 
 function getHumanChoice(){
 
-    const playerChoice = prompt("Enter your choice");
+    const playerChoice = prompt("Enter your choice -> Rock, Paper or Scissors");
 
 
     if (playerChoice == "rock"||playerChoice=="paper"||playerChoice=="scissors"){
