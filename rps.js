@@ -20,18 +20,13 @@ return playerChoice;
     }
     else{
 alert("enter a valid choice");
-getHumanChoice();
+return "wrongInput";
     }
 
 }
 
-function playRound(humanChoice,ComputerChoice){
-const humanChoiceInsensetive = "humanChoice".toLowerCase();
-
-const humanSelection = getHumanChoice();
-const computerSelection = getComputerChoice();
-
-
+function playRound(humanSelection,computerSelection){
+const humanChoiceInsensetive = "humanSelection".toLowerCase();
 
 if (humanSelection=="paper"&&computerSelection=="rock"){
     console.log("you win! " + humanSelection + " beats " + computerSelection);
@@ -48,6 +43,9 @@ else if (humanSelection=="rock"&&computerSelection=="scissors"){
 else if (humanSelection==computerSelection){
     console.log("Its a Tie");
 }
+else if (humanSelection=="wrongInput"){
+    console.log("Invalid input. Skipping round.");
+}
 else{
    computerScore++;
     console.log("you Lose! " + computerSelection + " beats " + humanSelection);
@@ -60,7 +58,9 @@ else{
 function playGame(){
 
 for(let round=0;round<5;round++){
- playRound();   
+    const humanChoice = getHumanChoice();
+    const computerChoice = getComputerChoice();
+    playRound(humanChoice, computerChoice); 
 }
 
 alert("Results --> Human Score: " + humanScore + " Computer Score: " + computerScore);
