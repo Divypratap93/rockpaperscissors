@@ -1,70 +1,60 @@
 let humanScore = 0;
 let computerScore = 0;
-function getComputerChoice(){
+let divContainer = document.createElement('div');
 
-    const compchoice = ["rock","paper","scissors"];
-    const randomindex = Math.floor(Math.random()*compchoice.length);
-    
-
+function getComputerChoice() {
+    const compchoice = ["rock", "paper", "scissors"];
+    const randomindex = Math.floor(Math.random() * compchoice.length);
     return compchoice[randomindex];
 }
 
-function getHumanChoice(){
-
-    const playerChoice = prompt("Enter your choice -> Rock, Paper or Scissors");
-
-
-    if (playerChoice == "rock"||playerChoice=="paper"||playerChoice=="scissors"){
-return playerChoice;
-
+function playRound(humanSelection, computerSelection) {
+    // humanSelection is already lowercase from the button text content
+    if (humanSelection == "paper" && computerSelection == "rock") {
+        divContainer.textContent = "You win! " + humanSelection + " beats " + computerSelection;
+        humanScore++;
+    } else if (humanSelection == "scissors" && computerSelection == "paper") {
+        divContainer.textContent = "You win! " + humanSelection + " beats " + computerSelection;
+        humanScore++;
+    } else if (humanSelection == "rock" && computerSelection == "scissors") {
+        divContainer.textContent = "You win! " + humanSelection + " beats " + computerSelection;
+        humanScore++;
+    } else if (humanSelection == computerSelection) {
+        divContainer.textContent = "It's a tie!";
+    } else {
+        computerScore++;
+        divContainer.textContent = "You lose! " + computerSelection + " beats " + humanSelection;
     }
-    else{
-alert("enter a valid choice");
-return "wrongInput";
+
+    // Display the scores
+    divContainer.textContent += ` | Human: ${humanScore}, Computer: ${computerScore}`;
+
+    if(humanScore>=5){
+        alert('the winner is Human');
+    resetGame();
     }
-
-}
-
-function playRound(humanSelection,computerSelection){
-const humanChoiceInsensetive = "humanSelection".toLowerCase();
-
-if (humanSelection=="paper"&&computerSelection=="rock"){
-    console.log("you win! " + humanSelection + " beats " + computerSelection);
-    humanScore++;
-}
-else if (humanSelection=="scissors"&&computerSelection=="paper"){
-    console.log("you win! " + humanSelection + " beats " + computerSelection);
-    humanScore++;
-}
-else if (humanSelection=="rock"&&computerSelection=="scissors"){
-    console.log("you win! " + humanSelection + " beats " + computerSelection);
-    humanScore++;
-}
-else if (humanSelection==computerSelection){
-    console.log("Its a Tie");
-}
-else if (humanSelection=="wrongInput"){
-    console.log("Invalid input. Skipping round.");
-}
-else{
-   computerScore++;
-    console.log("you Lose! " + computerSelection + " beats " + humanSelection);
+    else if(computerScore>=5) {
+        alert("the winner is computer");
+        resetGame();
+    }
 }
 
 
-
+function resetGame() {
+    humanScore = 0;
+    computerScore = 0;
+    divContainer.textContent = "Game reset. Start playing again!";
 }
 
-function playGame(){
+const Buttons = document.querySelectorAll("button");
+Buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+        playRound(button.textContent.toLowerCase(), getComputerChoice());
+    });
+});
 
-for(let round=0;round<5;round++){
-    const humanChoice = getHumanChoice();
-    const computerChoice = getComputerChoice();
-    playRound(humanChoice, computerChoice); 
-}
+document.body.appendChild(divContainer);
 
-alert("Results --> Human Score: " + humanScore + " Computer Score: " + computerScore);
 
-}
+    
 
-playGame();
